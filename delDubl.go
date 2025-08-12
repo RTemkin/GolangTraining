@@ -51,7 +51,8 @@ func main() {
 
 	fmt.Println(res)
 
-	// res2 := []int{11, 2, 3, 3, 2, 5, 12, 11, 17, 4, 7, 6, 18, 5, 16, 1, 0, 4, 8}
+	res2 := []int{11, 2, 3, 3, 2, 5, 12, 11, 17, 4, 7, 6, 18, 5, 16, 1, 0, 4, 8}
 	fmt.Println(SortBabls(res))
+	fmt.Println(SortBabls(res2))
 
 }
