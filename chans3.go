@@ -1,52 +1,56 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"runtime"
+	"time"
 )
 
-func squares(ch chan int, done chan struct{}) {
+var start time.Time
 
-	for val := range ch {
-		// val := <-ch
-		fmt.Println("squar:", val*val)
-	}
-	fmt.Println("squsres stopped")
-	done <- struct{}{}
+func init() {
+	start = time.Now()
+}
 
+func service1(ch chan string) {
+	fmt.Println("started servise1", time.Since(start))
+	ch <- "response service 1"
+}
+
+func service2(ch chan string) {
+	fmt.Println("started servise2", time.Since(start))
+	ch <- "response service 2"
 }
 
 func main() {
-	ch := make(chan int, 3)
-	done := make(chan struct{})
+	fmt.Println("started main", time.Since(start))
+	ch1 := make(chan string)
+	ch2 := make(chan string)
+	err := errors.New("Ничего не поступило")
 
-	go squares(ch, done)
-	fmt.Println("active goroutines1", runtime.NumGoroutine())
+	go service1(ch1)
+	go service2(ch2)
 
-	ch <- 2
-	ch <- 3
-	ch <- 4
-	ch <- 5
 
-	fmt.Println("active goroutines2", runtime.NumGoroutine())
+	// select {
+	// case res := <-ch1:
+	// 	fmt.Println(res, time.Since(start))
+	// case res := <-ch2:
+	// 	fmt.Println(res, time.Since(start))
+	// default:
+	// 	fmt.Println("default", err, time.Since(start))
+	// }
 
-	go squares(ch, done)
+	
 
-	fmt.Println("active goroutines3", runtime.NumGoroutine())
+	select {
+	case res := <- ch1:
+		fmt.Println(res, time.Since(start))
+	case res := <- ch2:
+		fmt.Println(res, time.Since(start))
+	case <-time.After(10 *time.Millisecond):
+		fmt.Println("default", err, time.Since(start))
+	}
 
-	ch <- 6
-	ch <- 7
-	ch <- 8
-	ch <- 9
-
-	fmt.Println("active goroutines4", runtime.NumGoroutine())
-
-	close(ch)
-	<-done
-	<-done
-
-	fmt.Println("active goroutines5", runtime.NumGoroutine())
-
-	fmt.Println("main stopped")
-
+	fmt.Println("stop main", time.Since(start))
 }
