@@ -9,7 +9,7 @@ type User struct {
 	Iq   float32
 }
 
-func CreatUser(name string, age int, prof string, iq float32)User {
+func CreatUser(name string, age int, prof string, iq float32) User {
 	return User{
 		Name: name,
 		Age:  age,
@@ -18,7 +18,7 @@ func CreatUser(name string, age int, prof string, iq float32)User {
 	}
 }
 
-func (u *User)ismIq(iq float32)User{
+func (u *User) ismIq(iq float32) User {
 	return User{
 		Name: u.Name,
 		Age:  u.Age,
@@ -27,14 +27,17 @@ func (u *User)ismIq(iq float32)User{
 	}
 }
 
-func (u *User)changeIq(iq float32){
+func (u *User) changeIq(iq float32) {
 	u.Iq = iq
 }
 
+func slaceIsm(sl *[]int) {
+	*sl = append(*sl, 4)  //новые элементы добавлябться в срез только при использ указателя 
+	(*sl)[0] = 100       //а значение меняется и без  sl[0] = 100, но в данной функции  обязательно *
+}                        //как как фукция получает sl *[]int
 
 func main() {
 
-		
 	user1 := CreatUser("Rom", 33, "Ingener", 100.5)
 
 	fmt.Println(user1)
@@ -44,5 +47,12 @@ func main() {
 
 	fmt.Println(user1)
 	fmt.Println(user2)
+
+	sl := make([]int, 3, 4)
+
+	sl[0], sl[1], sl[2] = 1, 2, 3
+
+	slaceIsm(&sl)
+	fmt.Println(sl)
 
 }
