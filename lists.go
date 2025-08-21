@@ -20,8 +20,8 @@ func (l *LinkedList) insertHead(data int) {
 		l.head = temp1
 	} else {
 		temp2 := l.head
-		l.head = temp1
 		temp1.next = temp2
+		l.head = temp1
 	}
 
 	l.length += 1
@@ -155,16 +155,14 @@ func main() {
 
 	var newList LinkedList
 
+	newList.insertHead(30)
+	newList.insertHead(20)
 	newList.insertHead(10)
-	newList.insertTail(20)
-	newList.insertTail(30)
+	
 	newList.insertTail(40)
-	newList.insertTail(50)
 
-	newList.insertNuber(3, 35)
-	newList.insertNuber(6, 55)
-
-	newList.deleteTail()
+	
+	
 
 	newList.printList()
 

@@ -12,6 +12,7 @@ type User struct {
 	Money      int
 	Avg_grades float64
 	Happiness  float64
+	Hobbies    []string
 }
 
 func (u *User) GetAllInfo() string {
@@ -29,6 +30,7 @@ func home_page(w http.ResponseWriter, r *http.Request) {
 		Money:      -3,
 		Avg_grades: 4.2,
 		Happiness:  0.8,
+		Hobbies:    []string{"Football", "Skate", "Dance"},
 	}
 	// fmt.Fprintf(w, "User name is: %v\n", bob.Name)
 
