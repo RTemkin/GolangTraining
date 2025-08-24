@@ -1,17 +1,29 @@
 package main
 
-func lenOfLongestSubstrbng(s string)int{
+import "fmt"
 
-	res := []string{}
+func lenOfLongestSubstrbng(s string) int {
 
-	for i:=0;i<len(s);i++{
-		
+	var left, right, result int
+	store := make(map[uint8]int)
+
+	for right < len(s) {
+		r := s[right]
+		store[r] += 1
+		for store[r] > 1 {
+			l := s[left]
+			store[l] -= 1
+			left++
+		}
+		right++
+		result = max(result, right-left+1)
 	}
-
+	return result
 }
 
+func main() {
 
-func main(){
-
+	st := "abcabcddferrt"
+	fmt.Println(lenOfLongestSubstrbng(st))
 
 }
