@@ -15,8 +15,10 @@ func lenOfLongestSubstrbng(s string) int {
 			store[l] -= 1
 			left++
 		}
-		right++
+
 		result = max(result, right-left+1)
+
+		right++
 	}
 	return result
 }

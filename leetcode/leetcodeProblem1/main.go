@@ -36,12 +36,40 @@ func sum2(nums []int, target int) []int {
 	return nil
 }
 
+func sum3(nums []int, target int) []int {
+	mapss := make(map[int]int)
+
+	for i, val := range nums {
+		comp := target - val
+		if indx, ok := mapss[comp]; ok {
+			return []int{i, indx}
+		}
+		mapss[val] = i
+	}
+
+	return nil
+}
+
+func sum4(nums []int, target int) []int {
+
+	for i := 0; i < len(nums)-1; i++{
+		j := i+1
+		for j < len(nums){
+			if nums[i] + nums[j] == target{
+				return []int{i, j}
+			}
+			j++
+		}
+	}
+	return nil
+}
+
 func main() {
 
-	nums := []int{1, 4, 5, 7, 8}
+	nums := []int{1, 4, 5, 6, 7, 8}
 	target := 12
 
-	fmt.Println(sum(nums, target))
+	fmt.Println(sum3(nums, target))
 
 	mapa := map[string]int{
 		"one":   1,
@@ -63,9 +91,9 @@ func main() {
 	}
 
 	for _, val := range mapa {
-		
-			fmt.Println(val)
-		
+
+		fmt.Println(val)
+
 	}
 
 }
